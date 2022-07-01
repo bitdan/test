@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="sdAddMx" name="sdAddMx">一键添加</button>
+</body>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+</script>
+<script>
+
+    jQuery(document).ready(function () {
+
+        jQuery("#sdAddMx").bind("click", function () {
+            var ACCOUNTNO = "117010100100733866";
+            var CURRENCYNO = "CNY";
+            alert(ACCOUNTNO);
+            jQuery.ajax({
+                url: "/sunda/xy/commom/opt.jsp?method=getbankinfo" + "&ACCOUNTNO=" + ACCOUNTNO + "&CURRENCYNO=" + CURRENCYNO,
+                type: "GET",
+                data: {},
+                dataType: "json",
+                success: function (result) {
+                    alert(JSON.stringify(result));
+                },
+                error: function (result) {
+                    console.log(result);
+                    alert(JSON.stringify(result));
+                    jQuery()
+                }
+            });
+
+        });
+    })
+
+</script>
+
+</html>

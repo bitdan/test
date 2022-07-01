@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>菜鸟教程 React 实例</title>
+    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+    <style>
+        .foo {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <div id="example"></div>
+    <div id="a"></div>
+    <div id="b"></div>
+    <div id="c"></div>
+    <script type="text/babel">
+        const element = <h1 className="foo">Hello, world</h1>;
+        ReactDOM.render(element, document.getElementById('root'));
+        ReactDOM.render(
+            <div>
+                <h1>{1 + 1}</h1>
+            </div>
+            ,
+            document.getElementById('example')
+        );
+        var i = 1;
+        ReactDOM.render(
+            <div>
+                <h1>{i == 1 ? 'True!' : 'False'}</h1>
+            </div>
+            ,
+            document.getElementById('a')
+        );
+        var myStyle = {
+            fontSize: 100,
+            color: '#FF0000'
+        };
+        ReactDOM.render(
+            <h1 style={myStyle}>lalal</h1>,
+            document.getElementById('b')
+        );
+        var arr = [
+            <h1>菜鸟教程</h1>,
+            <h2>学的不仅是技术，更是梦想！</h2>,
+        ];
+        ReactDOM.render(
+            <div>{arr}</div>,
+            document.getElementById('c')
+        );
+
+    </script>
+
+</body>
+
+</html>
