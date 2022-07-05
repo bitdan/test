@@ -7,76 +7,55 @@ jQuery(document).ready(function () {
     var oldbz = "";
     var tmpobj = "";
 
-    jQuery("button[name='addbutton2']").bind("click", function () {
+    jQuery("#indexnum2").bind("propertychange", function () {
         var indexnum2 = 0;
         if (document.getElementById("indexnum2")) {
             indexnum2 = document.getElementById("indexnum2").value * 1.0 - 1;
         }
-        alert(indexnum2);
+        alert("明细2aaaa" + indexnum2);
+        var indexnum1 = parseFloat(jQuery("#indexnum1").val()) - 1;
+        if (indexnum1 < indexnum2) {
+            for (var i = indexnum1; i < indexnum2; i++) {
+                jQuery("button[name='addbutton1']").click();
+            }
+        }
+    })
 
-        jQuery("#" + _oldbankaccount + "_" + indexnum2).bind('propertychange', function () {
+    var indexnum2 = document.getElementById("indexnum0").value * 1.0;
+    for (var i = 0; i < indexnum2; i++) {
 
-            oldbankaccount = jQuery("#" + _oldbankaccount + "_" + indexnum2).val();
-            oldbz = jQuery("#" + _oldbz + "_" + indexnum2).val();
+        jQuery("#" + _oldbz + "_" + i).bind('propertychange', function () {
+            oldbankaccount = jQuery("#" + _oldbankaccount + "_" + i).val();
+            oldbz = jQuery("#" + _oldbz + "_" + i).val();
             // alert(oldbankaccount);
             // alert(oldbz);
-            getBankinfo();
-        })
-        jQuery("#" + _oldbz + "_" + indexnum2).bind('propertychange', function () {
-
-            oldbankaccount = jQuery("#" + _oldbankaccount + "_" + indexnum2).val();
-            oldbz = jQuery("#" + _oldbz + "_" + indexnum2).val();
-            alert(oldbankaccount);
-            alert(oldbz);
-            getBankinfo();
-
-
-            // var hsbt = document.getElementById("indexnum1").value * 1.0 - 1;;
-            // alert("第一行::"+hsbt);
-            // if (hsbt < indexnum2) {
-            //     for (var i = -1; i < indexnum2; i++) {
-            //         jQuery("button[name='addbutton1']").click();
-            //         setTimeout(function () {
-            //             setfirstone(indexnum2);
-            //         }, 1000);
-            //     }
-            // }
-
-            jQuery("button[name='addbutton1']").click();
+            getBankinfo(i);
             setTimeout(function () {
-                setfirstone(indexnum2);
+                setfirstone(i);
             }, 1000);
         })
 
+    }
 
-
+    jQuery("#indexnum2").bind("propertychange", function () {
+        var i = parseFloat(this.value) - 1;
+        jQuery("#" + _oldbz + "_" + i).bind('propertychange', function () {
+            oldbankaccount = jQuery("#" + _oldbankaccount + "_" + i).val();
+            oldbz = jQuery("#" + _oldbz + "_" + i).val();
+            alert(oldbankaccount);
+            alert(oldbz);
+            getBankinfo(i);
+            setTimeout(function () {
+                setfirstone(i);
+            }, 1000);
+        })
     });
 
 
-    // oldbankaccount = jQuery("#" + _oldbankaccount + "_" + indexnum2).val();
-    // alert(oldbankaccount);
-    // for (var i = 0; i < indexnum2; i++) {
-    //     alert(i);
-    //     jQuery("#" + _oldbankaccount + "_" + i).bind('propertychange', function () {
-    //         alert(1111);
-    //         oldbankaccount = jQuery("#" + _oldbankaccount + "_" + i).val();
-    //         oldbz = jQuery("#" + _oldbz + "_" + i).val();
-    //         alert(oldbankaccount);
-    //         alert(oldbz);
-    //         getBankinfo();
-    //     });
-    //     jQuery("#" + _oldbz + "_" + i).bind('propertychange', function () {
-    //         oldbankaccount = jQuery("#" + _oldbankaccount + + "_" + i).val();
-    //         oldbz = jQuery("#" + _oldbz + "_" + i).val();
-    //         getBankinfo();
-    //     });
-    // }
-
     function setfirstone(x) {
-        // alert(tmpobj.CLTNO);
+        alert(tmpobj.CLTNO);
         var _companynamecode = dt2_companynamecode;//	公司主体代码
         jQuery("#" + _companynamecode + "_" + x).val(tmpobj.CLTNO);
-
 
         var _GSDM = dt2_GSDM;//	公司代码
         jQuery("#" + _GSDM + "_" + x).val(tmpobj.ACT_CLTNO);
@@ -92,17 +71,21 @@ jQuery(document).ready(function () {
         var _bankname = dt2_bankname;//	开户行名称
         jQuery("#" + _bankname + "_" + x).val(tmpobj.CNAPS_NAME);
 
-        var _bz = dt3_bz;//	币种
+        var _bz = dt2_bz;//	币种
         jQuery("#" + _bz + "_" + x).val(tmpobj.CURRENCYNO);
     }
 
-    function getBankinfo() {
+    function getBankinfo(x) {
+        var ACCOUNTNO = "117010100100733866";
+        var CURRENCYNO = "CNY";
         jQuery.ajax({
             url: "/sunda/xy/commom/opt.jsp",
             data: {
                 "method": "getbankinfo",
-                "ACCOUNTNO": oldbankaccount,
-                "CURRENCYNO": oldbz,
+                // "ACCOUNTNO": oldbankaccount,
+                // "CURRENCYNO": oldbz,
+                "ACCOUNTNO": ACCOUNTNO,
+                "CURRENCYNO": CURRENCYNO,
                 "ran": Math.random()
             },
             dataType: "json",
@@ -128,8 +111,8 @@ jQuery(document).ready(function () {
                 var _oldbankname = dt3_oldbankname;//	开户行名称
                 jQuery("#" + _oldbankname + "_" + x).val(res.CNAPS_NAME);
 
-                var _oldaccountstate = dt3_oldaccountstate;//	开户行国家
-                jQuery("#" + _oldaccountstate + "_" + x).val(res.CNAPS_NAME);
+                // var _oldaccountstate = dt3_oldaccountstate;//	开户行国家
+                // jQuery("#" + _oldaccountstate + "_" + x).val(res.CNAPS_NAME);
 
                 var _oldcoilno = dt3_oldcoilno;//	联行号
                 jQuery("#" + _oldcoilno + "_" + x).val(res.CNAPS_CODE);
