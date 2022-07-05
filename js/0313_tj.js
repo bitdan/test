@@ -12,7 +12,7 @@ jQuery(document).ready(function () {
         if (document.getElementById("indexnum2")) {
             indexnum2 = document.getElementById("indexnum2").value * 1.0 - 1;
         }
-        alert("明细2aaaa" + indexnum2);
+        // alert("明细2aaaa" + indexnum2);
         var indexnum1 = parseFloat(jQuery("#indexnum1").val()) - 1;
         if (indexnum1 < indexnum2) {
             for (var i = indexnum1; i < indexnum2; i++) {
@@ -42,8 +42,8 @@ jQuery(document).ready(function () {
         jQuery("#" + _oldbz + "_" + i).bind('propertychange', function () {
             oldbankaccount = jQuery("#" + _oldbankaccount + "_" + i).val();
             oldbz = jQuery("#" + _oldbz + "_" + i).val();
-            alert(oldbankaccount);
-            alert(oldbz);
+            // alert(oldbankaccount);
+            // alert(oldbz);
             getBankinfo(i);
             setTimeout(function () {
                 setfirstone(i);
@@ -76,16 +76,16 @@ jQuery(document).ready(function () {
     }
 
     function getBankinfo(x) {
-        var ACCOUNTNO = "117010100100733866";
-        var CURRENCYNO = "CNY";
+        // var ACCOUNTNO = "117010100100733866";
+        // var CURRENCYNO = "CNY";
         jQuery.ajax({
             url: "/sunda/xy/commom/opt.jsp",
             data: {
                 "method": "getbankinfo",
-                // "ACCOUNTNO": oldbankaccount,
-                // "CURRENCYNO": oldbz,
-                "ACCOUNTNO": ACCOUNTNO,
-                "CURRENCYNO": CURRENCYNO,
+                "ACCOUNTNO": oldbankaccount,
+                "CURRENCYNO": oldbz,
+                // "ACCOUNTNO": ACCOUNTNO,
+                // "CURRENCYNO": CURRENCYNO,
                 "ran": Math.random()
             },
             dataType: "json",
